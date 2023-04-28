@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $id = uniqid();
             $login = strval(rand(10000000,99999999));
             $pass = substr(md5($id), 5, 10);
-            $hash = substr(hash("sha256", $pass), 0, 10);
+            $hash = substr(hash("md5", $pass), 0, 10);
 
             $query1 = "INSERT INTO form1 (name, email, birthday, gender, limbs, bio, contract, id_login, id_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $ex1 = $connection->prepare($query1);

@@ -112,10 +112,10 @@ if (!empty($messages['success'])){
         <div class="col-12">
             <label>
                 Сверхспособности:<br>
-                <select name="powers[]" multiple="multiple">
-                    <option value="immortal" <?php if (!empty($values['superpowers']['immortal'])) print 'selected'; ?>>Бессмертие</option>
-                    <option value="through" <?php if (!empty($values['superpowers']['through'])) print 'selected'; ?>>Прохождение сквозь стены</option>
-                    <option value="levitate" <?php if (!empty($values['superpowers']['levitate'])) print 'selected'; ?>>Левитация</option>
+                <select name="powers[]" multiple="multiple" required>
+                    <option value="immortal" <?php if (!empty($values['powers']['immortal'])) print 'selected'; ?>>Бессмертие</option>
+                    <option value="through" <?php if (!empty($values['powers']['through'])) print 'selected'; ?>>Прохождение сквозь стены</option>
+                    <option value="levitate" <?php if (!empty($values['powers']['levitate'])) print 'selected'; ?>>Левитация</option>
                 </select>
             </label><br>
         </div>

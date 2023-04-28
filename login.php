@@ -35,9 +35,9 @@ else
 {
     $user = 'u54029';
     $pass = '5413631';
-    $connection = new PDO('mysql:host=localhost;dbname=u53012', $user, $pass, [PDO::ATTR_PERSISTENT => true]);
+    $connection = new PDO('mysql:host=localhost;dbname=u54029', $user, $pass, [PDO::ATTR_PERSISTENT => true]);
     $st = $connection->prepare("SELECT * FROM form1 WHERE id_login = :id_login && id_password = :id_password;");
-    $sterror = $st->execute(['id_login' => $_POST['login'], 'id_password' => hash("md5",$_POST['password'])]);
+    $sterror = $st->execute(['id_login' => $_POST['login'], 'id_password' => substr(hash("md5", $_POST['password']), 0, 10)]);
     $result = $st->fetch(PDO::FETCH_ASSOC);
     if (!$result) 
     {
@@ -48,7 +48,6 @@ else
 
     $_SESSION['login'] = $_POST['login'];
     $_SESSION['id'] = $result['id'];
-    $powers = $_POST['powers'];
 
     setcookie('name_value', $result['name'], time() + 12 * 30 * 24 * 60 * 60);
     setcookie('email_value', $result['email'], time() + 12 * 30 * 24 * 60 * 60);
@@ -57,34 +56,14 @@ else
     setcookie('radio-2_value', $result['limbs'], time() + 12 * 30 * 24 * 60 * 60);
     setcookie('life_value', $result['bio'], time() + 12 * 30 * 24 * 60 * 60);
     setcookie('choice_value', $result['contract'], time() + 12 * 30 * 24 * 60 * 60);
-    setcookie('powers_value', json_encode($powers), time() + 12 * 30 * 24 * 60 * 60);
 
-    /*$st = $connection->prepare("SELECT * FROM form_power WHERE form_id = :form_id;");
-    $sterror = $st->execute(['form_id' => $_SESSION['id']]);
-    $result = $st->fetchAll(PDO::FETCH_ASSOC);
-
-    $st = $connection->prepare("SELECT * FROM powers1;");
-    $sterror =  $st -> execute();
-    $abilities = $st->fetchAll();
-
-    foreach ($abilities as $ability) {
-        setcookie($ability['ability'].'_value', '', 100000);
+    $st = $connection->prepare("SELECT ability FROM powers1 WHERE id IN (SELECT power_id FROM form_power WHERE form_id = ?)");
+    $st->execute([$_SESSION['id']]);
+    while ($sterror = $st->fetch()){
+        $powers[$sterror['ability']] = $sterror['ability'];
     }
 
-    if ($result) 
-    {
-        foreach ($result as $item)
-        {
-            foreach ($abilities as $ability) 
-            {
-                if ($ability['power_id'] == $item['power_id'])
-                {
-                    setcookie($ability['ability'].'_value', '1', time() + 12 * 30 * 24 * 60 * 60);
-                    break;
-                }
-            }
-        }
-    }*/
+    setcookie('powers_value', json_encode($powers), time() + 12 * 30 * 24 * 60 * 60);
     
     header('Location: ./login.php');
 }
