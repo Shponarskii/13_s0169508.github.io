@@ -6,7 +6,6 @@
 }
 #c{
     color:rgba(0, 0, 0, 0.877);
-    font-size: medium;
 }
 #ab{
     max-width: 960px;
@@ -22,7 +21,8 @@ body{
 }
 a{
     color: rgb(25, 0, 255);
-    font-size: small;
+    font-size: large;
+    margin-left: 2px;
 }
 
 .error {

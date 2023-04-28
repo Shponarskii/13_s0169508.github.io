@@ -9,7 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $messages['success'] = 'Спасибо, результаты сохранены.';
         if (!empty($_COOKIE['login']))
         {
-            $messages['success'] = ' Вы можете <a href="login.php">войти</a> с логином <b>$_COOKIE['login']</b> и паролем <b>$_COOKIE['password'].</b>';
+            $messages['success'] = sprintf(' Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong> и паролем <strong>%s</strong> для изменения данных.',
+                    strip_tags($_COOKIE['login']), strip_tags($_COOKIE['password']));
             setcookie('login', '', 1);
             setcookie('password', '', 1);
         }
